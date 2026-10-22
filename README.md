@@ -1,10 +1,10 @@
 # RISE-BM25 on EnterpriseRAGBench
 
-运行 EnterpriseRAGBench 的 **RISE-BM25：无 TOC、保留 reasoning_content**。支持 10,970 / 511,959 篇文档，两种规模使用相同的 500 道 QA，默认题目并发为 4。
+运行 EnterpriseRAGBench 的 **RISE-BM25（无 TOC）**。支持 10,970 / 511,959 篇文档，两种规模使用相同的 500 道 QA，默认题目并发为 4。
 
 基于 [官方 RISE 固定提交](https://github.com/texttron/RISE/tree/32672b59ead8381decae7d412f05bb53d399946a) 和[论文](https://arxiv.org/abs/2606.06880)。保留官方全文档 BM25（k1=1.5、b=0.75）、每查询 top-1000 召回、top-10 预览、累积工作目录、原无 TOC prompt 及 search/bash/read 工具；不切 chunk、不使用 embedding 或 reranker。
 
-与论文设置的主要区别：使用 DeepSeek 和 EnterpriseRAGBench；开启预算耗尽后的强制回答；采用 0–4 分 judge；使用 Linux 沙箱。另修复了 read 的目录边界校验。保留推理历史本身是官方行为。QA 温度 0、max_tokens=32000、100 轮探索，必要时再追加一轮最终回答；上下文不主动压缩。单次 HTTP 超时 900 秒，3600 秒问答预算在轮次边界检查。
+与论文设置的主要区别：使用 DeepSeek 和 EnterpriseRAGBench；开启预算耗尽后的强制回答；采用 0–4 分 judge；使用 Linux 沙箱。另修复了 read 的目录边界校验。QA 温度 0、max_tokens=32000、100 轮探索，必要时再追加一轮最终回答；上下文不主动压缩。单次 HTTP 超时 900 秒，3600 秒问答预算在轮次边界检查。
 
 ## 安装
 
@@ -48,7 +48,7 @@ cp credentials.example.json credentials.local.json
 chmod 600 credentials.local.json
 ```
 
-请求模型为 `deepseek-v4-flash`，响应模型检查值为 `deepseek-v4-flash-ga-260731`。API 需支持 OpenAI 兼容 Chat Completions、工具调用、接收历史 reasoning_content 和完整 usage。不发送推理开关参数，保留服务端返回的推理内容。使用不同模型或服务端版本时，应作为不同模型条件记录。
+请求模型为 `deepseek-v4-flash`，响应模型检查值为 `deepseek-v4-flash-ga-260731`。API 需支持 OpenAI 兼容 Chat Completions、工具调用和完整 usage。使用不同模型或服务端版本时，应作为不同模型条件记录。
 
 生成两个 500 QA 运行计划，默认并发 4。若使用已有数据，把 `--data` 换成相应绝对路径；该步骤不调用 API：
 
