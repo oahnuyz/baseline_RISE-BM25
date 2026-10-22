@@ -155,7 +155,6 @@ def configuration(plan):
         patches=['read_path_component_boundary']+(['toc_tracks_inserted_headings','anchor_cursor_filter'] if structured else []),
         overrides=['DeepSeek model for all phases','omit reasoning controls']+(['online rather than Batch structure',
                    'omit YAML frontmatter assumption in structured QA prompt'] if structured else [])+[
-                   'preserve reasoning_content in assistant history and response traces per user configuration',
                    'RARG judge and measurement contract','Linux bwrap','explicit per-stage concurrency'],
         scheduling='one dataset per independent process; sequential stages within that process; QA has only question admission')
 
