@@ -1,0 +1,13 @@
+{
+  "10970": {
+    "documents": 10970,
+    "text_bytes": 54897207,
+    "identity_sha256": "31e2814dee72ee3f15fa78513e55f5c89b89df6b3cc96c8166af861f7c7fa3c9"
+  },
+  "511959": {
+    "documents": 511959,
+    "text_bytes": 2479366899,
+    "set_sha256": "e6ab841d4383dcba258bd3751d85cd81cd810e936c103079877c992fdd563218",
+    "order_sha256": "61bcd873dd2ac110c2e3c073b99b3a61bf7cf772fbe2e45be6b0a2867a7474f8"
+  }
+}

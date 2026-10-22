@@ -1,0 +1,37 @@
+{
+  "code/data_manifests/frozen/bedrock_dsids.txt": {
+    "url": "https://raw.githubusercontent.com/BstWPY/BM25-Wins-at-Scale/0626d4f4019c6a04b891b7453dd93a3491999584/data_manifests/frozen/bedrock_dsids.txt",
+    "bytes": 43447,
+    "sha256": "c203be6dfe1dd60bb9f0a86a828a0b76786d2dccbb1db413723fffb40b07173c"
+  },
+  "code/data_manifests/frozen/ocean_order.txt.gz": {
+    "url": "https://raw.githubusercontent.com/BstWPY/BM25-Wins-at-Scale/0626d4f4019c6a04b891b7453dd93a3491999584/data_manifests/frozen/ocean_order.txt.gz",
+    "bytes": 10117704,
+    "sha256": "8d0f240af16ee362c0c5ac34ae6746967ff2f4d21d85c59463400ae18863a1d7"
+  },
+  "corpus_package/LICENSE": {
+    "url": "https://huggingface.co/datasets/Bstwpy/BM25-Wins-at-Scale-Corpus/resolve/a00241078f59719a06770a0d6eea10067690d76a/LICENSE?download=true",
+    "bytes": 1072,
+    "sha256": "9eab95dae84867fa8ba1450e4bf34addf74e841923f4b6877f4d2df82bed3508"
+  },
+  "corpus_package/benchmark/questions.jsonl": {
+    "url": "https://huggingface.co/datasets/Bstwpy/BM25-Wins-at-Scale-Corpus/resolve/a00241078f59719a06770a0d6eea10067690d76a/benchmark/questions.jsonl?download=true",
+    "bytes": 764927,
+    "sha256": "f9524b9157cd43aae36b99333a124738804306ea6d07f332d49faa6d3d147905"
+  },
+  "corpus_package/benchmark/generated_data/company_overview.md": {
+    "url": "https://huggingface.co/datasets/Bstwpy/BM25-Wins-at-Scale-Corpus/resolve/a00241078f59719a06770a0d6eea10067690d76a/benchmark/generated_data/company_overview.md?download=true",
+    "bytes": 7275,
+    "sha256": "a889c45be24c8075c605e83771e704a437ccf60b33d4841f1dec7185333168d2"
+  },
+  "corpus_package/benchmark/generated_data/initiatives.md": {
+    "url": "https://huggingface.co/datasets/Bstwpy/BM25-Wins-at-Scale-Corpus/resolve/a00241078f59719a06770a0d6eea10067690d76a/benchmark/generated_data/initiatives.md?download=true",
+    "bytes": 13436,
+    "sha256": "b65f6fdc8956accb7266cfc7c2b2f72897bcb0995843e40bdc38d09c43199625"
+  },
+  "corpus_package/reconstruction_seed/enterprise_corpus_meta.parquet": {
+    "url": "https://huggingface.co/datasets/Bstwpy/BM25-Wins-at-Scale-Corpus/resolve/a00241078f59719a06770a0d6eea10067690d76a/reconstruction_seed/enterprise_corpus_meta.parquet?download=true",
+    "bytes": 1382220647,
+    "sha256": "41d8191e44616227a9be173a6e4a09340b873a07a8f03e3f283ecbde85547cd6"
+  }
+}
