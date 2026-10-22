@@ -1,0 +1,11 @@
+bm25s==0.3.9
+PyStemmer==3.1.0
+openai==2.41.0
+httpx==0.28.1
+numpy==2.2.6
+scipy==1.15.3
+pandas==2.3.3
+pyarrow==24.0.0
+python-dotenv==1.2.2
+tiktoken==0.13.0
+tqdm==4.67.3
