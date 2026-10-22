@@ -2,9 +2,32 @@
 
 运行 EnterpriseRAGBench 的 **RISE-BM25（无 TOC）**。支持 10,970 / 511,959 篇文档，两种规模使用相同的 500 道 QA，默认题目并发为 4。
 
-基于 [官方 RISE 固定提交](https://github.com/texttron/RISE/tree/32672b59ead8381decae7d412f05bb53d399946a) 和[论文](https://arxiv.org/abs/2606.06880)。保留官方全文档 BM25（k1=1.5、b=0.75）、每查询 top-1000 召回、top-10 预览、累积工作目录、原无 TOC prompt 及 search/bash/read 工具；不切 chunk、不使用 embedding 或 reranker。
+基于 [官方 RISE 固定提交](https://github.com/texttron/RISE/tree/32672b59ead8381decae7d412f05bb53d399946a) 和[论文](https://arxiv.org/abs/2606.06880)，复现其中的 RISE-BM25 消融版本。下面分别说明沿用官方的设置和本次实验适配。
 
-与论文设置的主要区别：使用 DeepSeek 和 EnterpriseRAGBench；开启预算耗尽后的强制回答；采用 0–4 分 judge；使用 Linux 沙箱。另修复了 read 的目录边界校验。QA 温度 0、max_tokens=32000、100 轮探索，必要时再追加一轮最终回答；上下文不主动压缩。单次 HTTP 超时 900 秒，3600 秒问答预算在轮次边界检查。
+## 沿用官方的配置
+
+| 项目 | 本仓库沿用的设置 |
+|---|---|
+| 检索与文档形式 | 全文档 BM25，k1=1.5、b=0.75；无 TOC，不切 chunk，不使用 embedding 或 reranker |
+| 召回与预览 | 每个子查询 top-1000 召回、top-10 预览；召回文档累积到工作目录 |
+| Prompt 与工具 | 官方无 TOC prompt，以及 search / bash / read 工具；bash 输出上限 4000 字符、子进程超时 60 秒，read 默认读取 2000 行 |
+| 单次输出预算 | `max_tokens=32000`，来自官方代码的 `per_call_max_tokens` 默认值；这是单次模型调用的输出预算，不是整题 token 总量或上下文窗口大小 |
+| 对话上下文管理 | `context_level="level0"`，不主动总结或清空历史；工具自身的输出截断仍然生效 |
+| 轮次与时间预算 | 最多 100 轮模型调用、每题 3600 秒；沿用官方实现，在开始下一轮模型调用前检查时间预算 |
+| 题目并发 | 默认同时进行 4 道 QA，与论文实验的并发数一致 |
+
+100 轮及一小时预算见[论文第 4 节](https://arxiv.org/html/2606.06880v1#S4)；单次输出预算和上下文管理以[官方配置](https://github.com/texttron/RISE/blob/32672b59ead8381decae7d412f05bb53d399946a/src/rise/protocol.py#L85)及 [Agent 实现](https://github.com/texttron/RISE/blob/32672b59ead8381decae7d412f05bb53d399946a/src/rise/agent.py#L120)为依据，不将这些代码默认值误写成论文逐项明确列出的参数。
+
+一小时预算不会在请求或工具执行中途强行中断。例如第 59 分钟开始的调用在第 61 分钟返回，程序会在准备下一轮时发现超时。这种检查方式沿用官方实现；下述强制回答可能进一步增加整题耗时。
+
+## 本次实验适配
+
+- **模型与数据集**：使用 DeepSeek 和 EnterpriseRAGBench；支持 10,970 / 511,959 篇文档，两种规模使用同一组 500 道 QA。QA 温度设为 **0**。
+- **预算耗尽后的回答**：开启强制回答。在轮次或时间预算耗尽后，必要时追加一轮不再调用工具的最终回答；论文主实验关闭该选项。因此最多可出现 100 轮常规模型调用加 1 轮强制回答。
+- **HTTP 超时**：HTTP 客户端超时参数显式设为 **900 秒**。官方客户端没有显式设置该参数，其固定 SDK 版本默认读取等超时为 600 秒、连接超时为 5 秒。900 秒属于本次 API 服务适配；请求重试可能使一次模型调用的累计耗时更长。
+- **评估与记录**：采用固定的 0–4 分 judge，统一统计 token、问答时间和 iteration，补充完整 trace、失败重试与断点恢复。指标定义见“结果与计时”。
+- **运行环境**：使用 Linux `bubblewrap` 沙箱及固定版本依赖，适配服务器执行。
+- **代码修复**：修复 `read` 的目录边界校验，保持该工具只能读取已召回工作目录内文件的限制。
 
 ## 安装
 
