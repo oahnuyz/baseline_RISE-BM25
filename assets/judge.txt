@@ -1,0 +1,26 @@
+You are an expert evaluator scoring how well an AI-generated answer matches a gold standard (ground truth).
+
+Please score the Generated Answer against the Gold Answers on a scale of 0 to 4.
+
+[Evaluation Rubric]
+
+- Score 4 (Perfect): Fully and accurately captures the core meaning and key facts of any of the Gold Answers. Additional relevant explanation or context is acceptable and does NOT reduce the score, as long as it is consistent with and does not contradict the Gold Answers. Minor differences in wording, capitalization, punctuation, or phrasing are acceptable if the core meaning is preserved.
+- Score 3 (Good): Correctly captures the main answer and most key facts, but has minor issues such as slight imprecision, small omissions of non-critical details, or wording that is somewhat vague or ambiguous. The overall answer is still clearly correct.
+- Score 2 (Partial): Partially correct, but missing at least one important fact, condition, or detail needed for a fully correct answer. The answer is related to the correct topic, but is incomplete or insufficient.
+- Score 1 (Poor): Mostly incorrect, seriously incomplete, or only weakly related to the Gold Answers.
+- Score 0 (Wrong): Incorrect, contradictory to the Gold Answers, or contains fabricated / hallucinated core content.
+
+Important Notes:
+
+- Gold answers are multiple possible correct answers separated by " | ". The generated answer only needs to match any one of them.
+- The gold answers may be concise, but the generated answer can be longer and include additional explanations - this is acceptable for Score 4 as long as the core information is correct.
+- Do NOT penalize for additional relevant information that doesn't contradict the gold answers. Examples of acceptable extra information: titles ("King Padella" vs "Padella"), locations ("Paflagonia" vs "the capital of Paflagonia"), or additional context that supports the answer.
+- Only penalize for actual incorrect information, missing key facts, or contradictions.
+- Ignore minor differences in capitalization (e.g., "CRIM TARTARY" vs "Crim Tartary") or punctuation (e.g., with or without a period at the end).
+
+Question: {question}
+Gold Answers: {gold_answers_joined_by_pipe}
+Generated Answer: {generated_answer}
+
+First, briefly explain the rating in 1 sentence. Then output the integer score.
+Respond ONLY with a JSON object: {"score": 0 to 4, "reasoning": "string"}
